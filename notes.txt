@@ -1,0 +1,171 @@
+Binary search--
+
+# input 
+# 79, 99, 44, 55, 22, 88, 11, 0, 66, 33
+# search key = 55
+# remove some 
+# display 
+
+# Insert data file
+# Smith, First name: Lorraine, Age: 37
+# Yee, First name: Tom, Age: 43
+# Adams, First name: Henry, Age: 63
+# Hashimoto, First name: Sato, Age: 21
+# Stimson, First name: Henry, Age: 29
+# Velasquez, First name: Jose, Age: 72
+# Lamarque, First name: Henry, Age: 54
+# Vang, First name: Minh, Age: 22
+# Creswell, First name: Lucinda, Age: 18
+
+#Delete object
+#
+# Last name: Evans, First name: Patty, Age: 24
+# Last name: Adams, First name: Henry, Age: 63
+# Last name: Hashimoto, First name: Sato, Age: 21
+# Last name: Stimson, First name: Henry, Age: 29
+# Last name: Velasquez, First name: Jose, Age: 72
+# Last name: Lamarque, First name: Henry, Age: 54
+# Last name: Vang, First name: Minh, Age: 22
+#
+
+--- Bubble Sort ---
+
+input - 77 99 44 55 22 88 11 0 66 33
+output - 0 11 22 33 44 55 66 77 88 99
+
+#Insert item into array
+arr.insert(77)
+arr.insert(99)
+arr.insert(44)
+arr.insert(55)
+arr.insert(22)
+arr.insert(88)
+arr.insert(11)
+arr.insert(00)
+arr.insert(66)
+arr.insert(33)
+
+arr.display()
+# Sort using bubble sort
+arr.bubbleSort()
+
+
+-----------------------------------------------------------------------------
+--- Insertion sort ----
+-----------------------------------------------------------------------------
+
+input -  7, 3, 4, 1, 6, 5, 2,
+Note: Start at outer loop at index 1 and move toward n In inner loop
+
+# Insert item into array
+arr.insert(77)
+arr.insert(99)
+arr.insert(44)
+arr.insert(55)
+arr.insert(22)
+arr.insert(88)
+arr.insert(11)
+arr.insert(00)
+arr.insert(66)
+arr.insert(33)
+arr.display()
+
+# Sort using insertion sort
+arr.insertionSort()
+
+Input / Output
+77 99 44 55 22 88 11 0 66 33
+0 11 22 33 44 55 66 77 88 99
+
+-- Input 
+-- (Inside the main function) Insertion sort of an object
+maxSize = 100
+arr.insert(“Evans”, “Patty”, 24)
+arr.insert(“Smith”, “Doc”, 59)
+arr.insert(“Smith”, “Lorraine”, 37)
+arr.insert(“Smith”, “Paul”, 37)
+arr.insert(“Yee”, “Tom”, 43)
+arr.insert(“Hashimoto”, “Sato”, 21)
+arr.insert(“Stimson”, “Henry”, 29)
+arr.insert(“Velasquez”, “Jose”, 72)
+arr.insert (“Vang”, “Minh”, 22)
+arr.insert(“Creswell”, “Lucinda”, 18)
+
+-- “Before sorting:”---
+arr.display()
+arr.insertionSort()
+
+-----------------------------------------------------------------------------
+--- Stack -----
+-----------------------------------------------------------------------------
+1. A programmer tool: It is not used for storing data as we do with array. They provide computational aid 
+2. Restricted access: It is retricted to last element of the self. On removing the last element second last can be access
+3. More abstract
+
+1. Use for arithmetic operation in some old calculator
+2. In microprocessor - The return address and argumant are stored in self
+3. Top instance variable point to emepty space above the last inserted item in the self. On inserting new item top is incremented
+
+Psuedo Code(Inside the main function)
+Class member: maxSize, stackVec, top(pointer to the last item in the self)
+Method: peek, pop, push, isEmpty, isFull
+
+# make new self, size 10
+theStack = StackX(10)
+
+# push items onto self
+theStack.push(20)
+theStack.push(40)
+theStack.push(60)
+theStack.push(80)
+
+# delete item from self
+while !theStack.isEmpty() :
+    value = theStack.pop()
+
+-------------------------------------------------------------------------------
+--- Queue ----------
+-------------------------------------------------------------------------------
+
+1. FIFO
+2. Wrapping around the rear pointer so that any deletion of item from the front of queue leave an index empty.
+In that case we can insert new item to the start index of an array
+3. We can insert more item in the queue with wrap around when queue is not full (Circular queue / Ring buffer)
+
+            |-------|
+                44    <--- Rear pointer
+            |-------|
+                25
+            |-------|
+                79
+            |-------|
+                32    <--- Front pointer
+            |-------|
+                      <--- Wrap around pointer (circular queue)
+            |-------|
+
+Psuedo Code:
+1. Two pointer rear and front and no of item in a queue
+2. Size of the queue maxSize
+3. Array to build the structure of an queue
+4. Method: insert, remove, isempty, isfull, peek
+
+----------------------------------------------------------------------------------
+Linked List---
+----------------------------------------------------------------------------------
+1. First insertion and deletion with linked list
+2. Linked list has find, insert and delete opearation
+
+In linked list implementation we have 2 object
+-> Link object (hold the data and pointer to the next item in the list)
+-> Linklist class (Skeleton of the data structure we are going to create)
+It has a pfirst pointer to point to first item in the list
+
+Method: insertFirst, deleteFirst, displayList()
+
+-----------------------------------------------------------------------------------
+Abstract data types
+-----------------------------------------------------------------------------------
+Double Ended linked list:
+It maintain to pointer to last link of the linked list
+
