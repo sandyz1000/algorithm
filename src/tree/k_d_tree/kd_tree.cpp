@@ -1,115 +1,90 @@
-// A C++ program to demonstrate operations of KD tree 
-#include<bits/stdc++.h> 
-using namespace std; 
+export class Node {
+    point: number[];
+    left: Node | null;
+    right: Node | null;
 
-const int k = 2; 
+    constructor(arr: number[]) {
+        this.point = arr;
+        this.left = this.right = null;
+    }
+}
 
-// A structure to represent node of kd tree 
-struct Node 
-{ 
-	int point[k]; // To store k dimensional point 
-	Node *left, *right; 
-}; 
+const k = 2;
 
-// A method to create a node of K D tree 
-struct Node* newNode(int arr[]) 
-{ 
-	struct Node* temp = new Node; 
+function newNode(arr: number[]): Node {
+    return new Node(arr);
+}
 
-	for (int i=0; i<k; i++) 
-	temp->point[i] = arr[i]; 
+function insertRec(root: Node | null, point: number[], depth: number): Node {
+    if (root === null) {
+        return newNode(point);
+    }
 
-	temp->left = temp->right = NULL; 
-	return temp; 
-} 
+    const cd = depth % k;
 
-// Inserts a new node and returns root of modified tree 
-// The parameter depth is used to decide axis of comparison 
-Node *insertRec(Node *root, int point[], unsigned depth) 
-{ 
-	// Tree is empty? 
-	if (root == NULL) 
-	return newNode(point); 
+    if (point[cd] < root.point[cd]) {
+        root.left = insertRec(root.left, point, depth + 1);
+    } else {
+        root.right = insertRec(root.right, point, depth + 1);
+    }
 
-	// Calculate current dimension (cd) of comparison 
-	unsigned cd = depth % k; 
+    return root;
+}
 
-	// Compare the new point with root on current dimension 'cd' 
-	// and decide the left or right subtree 
-	if (point[cd] < (root->point[cd])) 
-		root->left = insertRec(root->left, point, depth + 1); 
-	else
-		root->right = insertRec(root->right, point, depth + 1); 
+function insert(root: Node | null, point: number[]): Node | null {
+    return insertRec(root, point, 0);
+}
 
-	return root; 
-} 
+function arePointsSame(point1: number[], point2: number[]): boolean {
+    for (let i = 0; i < k; ++i) {
+        if (point1[i] !== point2[i]) {
+            return false;
+        }
+    }
 
-// Function to insert a new point with given point in 
-// KD Tree and return new root. It mainly uses above recursive 
-// function "insertRec()" 
-Node* insert(Node *root, int point[]) 
-{ 
-	return insertRec(root, point, 0); 
-} 
+    return true;
+}
 
-// A utility method to determine if two Points are same 
-// in K Dimensional space 
-bool arePointsSame(int point1[], int point2[]) 
-{ 
-	// Compare individual pointinate values 
-	for (int i = 0; i < k; ++i) 
-		if (point1[i] != point2[i]) 
-			return false; 
+function searchRec(root: Node | null, point: number[], depth: number): boolean {
+    if (root === null) {
+        return false;
+    }
 
-	return true; 
-} 
+    if (arePointsSame(root.point, point)) {
+        return true;
+    }
 
-// Searches a Point represented by "point[]" in the K D tree. 
-// The parameter depth is used to determine current axis. 
-bool searchRec(Node* root, int point[], unsigned depth) 
-{ 
-	// Base cases 
-	if (root == NULL) 
-		return false; 
-	if (arePointsSame(root->point, point)) 
-		return true; 
+    const cd = depth % k;
 
-	// Current dimension is computed using current depth and total 
-	// dimensions (k) 
-	unsigned cd = depth % k; 
+    if (point[cd] < root.point[cd]) {
+        return searchRec(root.left, point, depth + 1);
+    }
 
-	// Compare point with root with respect to cd (Current dimension) 
-	if (point[cd] < root->point[cd]) 
-		return searchRec(root->left, point, depth + 1); 
+    return searchRec(root.right, point, depth + 1);
+}
 
-	return searchRec(root->right, point, depth + 1); 
-} 
+function search(root: Node | null, point: number[]): boolean {
+    return searchRec(root, point, 0);
+}
 
-// Searches a Point in the K D tree. It mainly uses 
-// searchRec() 
-bool search(Node* root, int point[]) 
-{ 
-	// Pass current depth as 0 
-	return searchRec(root, point, 0); 
-} 
+function main() {
+    let root: Node | null = null;
+    const points: number[][] = [
+        [3, 6], [17, 15], [13, 15], [6, 12],
+        [9, 1], [2, 7], [10, 19]
+    ];
 
-// Driver program to test above functions 
-int main() 
-{ 
-	struct Node *root = NULL; 
-	int points[][k] = {{3, 6}, {17, 15}, {13, 15}, {6, 12}, 
-					{9, 1}, {2, 7}, {10, 19}}; 
+    const n = points.length;
 
-	int n = sizeof(points)/sizeof(points[0]); 
+    for (let i = 0; i < n; i++) {
+        root = insert(root, points[i]);
+    }
 
-	for (int i=0; i<n; i++) 
-	root = insert(root, points[i]); 
+    const point1 = [10, 19];
+    search(root, point1) ? console.log("Found") : console.log("Not Found");
 
-	int point1[] = {10, 19}; 
-	(search(root, point1))? cout << "Found\n": cout << "Not Found\n"; 
+    const point2 = [12, 19];
+    search(root, point2) ? console.log("Found") : console.log("Not Found");
+}
 
-	int point2[] = {12, 19}; 
-	(search(root, point2))? cout << "Found\n": cout << "Not Found\n"; 
-
-	return 0; 
-} 
+main();
